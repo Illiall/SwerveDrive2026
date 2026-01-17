@@ -144,10 +144,16 @@ public class Drivetrain extends SubsystemBase {
 
   //Flips the path's for different team colors
   public boolean flipTeam(){
+    //gets the alliance color from the driverstation
     var alliance = DriverStation.getAlliance();
+    //if the alliance variable is present ...
     if(alliance.isPresent()){
+      //returns true 
+      //red alliance is true
       return alliance.get() == DriverStation.Alliance.Red;
     }else{
+      //returns false
+      //Blue alliance is false
       return false;
     }
   }

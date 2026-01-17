@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.MagnetSensorConfigs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
@@ -22,6 +22,7 @@ import frc.robot.Constants;
 
 
 public class SwerveModule {
+
     SparkMax rotation_motor;
     double rotation_speed;
 
@@ -52,7 +53,7 @@ public class SwerveModule {
 
     private final CANcoder rotation_can_coder;
 
-    CANcoderConfiguration can_coder_config;
+    MagnetSensorConfigs can_coder_config;
 
     @SuppressWarnings("removal")
     public SwerveModule(int module_number, int rotation_motor_id, int translation_motor_id, int rotation_can_coder_id, Rotation2d rotation_offset){
@@ -63,16 +64,14 @@ public class SwerveModule {
 
         rotation_can_coder = new CANcoder(rotation_can_coder_id);
 
-        can_coder_config = new CANcoderConfiguration();
+        can_coder_config = new MagnetSensorConfigs().withAbsoluteSensorDiscontinuityPoint(0.5);
 
-        can_coder_config.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 0.5;
         rotation_can_coder.getConfigurator().apply(can_coder_config);
 
         this.translation_motor = new SparkMax(translation_motor_id, MotorType.kBrushless);
         this.translation_encoder = this.translation_motor.getEncoder();
         this.translation_encoder.setPosition(0);
         this.translation_motor_config = new SparkMaxConfig();
-
 
         this.rotation_motor = new SparkMax(rotation_motor_id, MotorType.kBrushless);
         this.rotation_encoder = this.rotation_motor.getEncoder();
